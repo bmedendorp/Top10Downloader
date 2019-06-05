@@ -1,7 +1,7 @@
 package com.tythis.top10downloader;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -9,7 +9,6 @@ import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -41,9 +40,12 @@ public class MainActivity extends AppCompatActivity {
             ParseApplications parseApplications = new ParseApplications();
             parseApplications.parse(s);
 
-            ArrayAdapter<FeedEntry> arrayAdapter = new ArrayAdapter<FeedEntry>(
-                    MainActivity.this, R.layout.list_item, parseApplications.getApplications());
-            listApps.setAdapter(arrayAdapter);
+//            ArrayAdapter<FeedEntry> arrayAdapter = new ArrayAdapter<FeedEntry>(
+//                    MainActivity.this, R.layout.list_item, parseApplications.getApplications());
+//            listApps.setAdapter(arrayAdapter);
+            FeedAdapter feedAdapter = new FeedAdapter(MainActivity.this, R.layout.list_record,
+                    parseApplications.getApplications());
+            listApps.setAdapter(feedAdapter);
         }
 
         @Override
