@@ -11,6 +11,11 @@ import java.util.ArrayList;
 public class ParseApplications {
     private static final String TAG = "ParseApplications";
     private ArrayList<FeedEntry> applications;
+    private String listTitle = "";
+
+    public String getListTitle() {
+        return listTitle;
+    }
 
     public ParseApplications() {
         this.applications = new ArrayList<>();
@@ -47,7 +52,7 @@ public class ParseApplications {
                         break;
                     case XmlPullParser.END_TAG:
 //                        Log.d(TAG, "parse: Ending tag for " + tagName);
-                        if (inEntry) {
+                       if (inEntry) {
                             if ("entry".equalsIgnoreCase(tagName)) {
                                 applications.add(currentRecord);
                                 inEntry = false;
@@ -62,7 +67,11 @@ public class ParseApplications {
                             } else if ("image".equalsIgnoreCase(tagName)) {
                                 currentRecord.setImageURL(textValue);
                             }
-                        }
+                        } else {
+                           if ("title".equalsIgnoreCase(tagName)) {
+                               listTitle = textValue;
+                           }
+                       }
                         break;
                     default:
                         // Nothing else to do.

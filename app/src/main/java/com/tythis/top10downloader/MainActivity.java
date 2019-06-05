@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ListView listApps;
+    private TextView title;
     private String feedUrl = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=%d/xml";
     private int feedLimit = 10;
     private String feedCachedUrl = "INVALIDATED";
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listApps = findViewById(R.id.xmlListView);
+        title = findViewById(R.id.idTitle);
 
         if (savedInstanceState != null) {
             feedUrl = savedInstanceState.getString(STATE_URL);
@@ -113,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
 //            Log.d(TAG, "onPostExecute: parameter is " + s);
             ParseApplications parseApplications = new ParseApplications();
             parseApplications.parse(s);
+
+            title.setText(parseApplications.getListTitle() + " (" + feedLimit + ")");
 
 //            ArrayAdapter<FeedEntry> arrayAdapter = new ArrayAdapter<FeedEntry>(
 //                    MainActivity.this, R.layout.list_item, parseApplications.getApplications());
